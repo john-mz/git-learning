@@ -1,3 +1,2 @@
-Learning how to use Git
+Learning how to use Git like a Pro
 
-    
