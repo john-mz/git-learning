@@ -1,3 +1,2 @@
 print('interesada')
-print('hola')
-print('chao')
+print('tristeza')
