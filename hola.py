@@ -7,3 +7,5 @@ if 5 in arreglo:
     print('yes')
 else:
     print('nokas')
+
+arreglo2 = [3,3,3,3]
