@@ -10,3 +10,4 @@ else:
 
 arreglo2 = [3,3,3]
 newline = 0
+newline2 = 2
