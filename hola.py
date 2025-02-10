@@ -9,3 +9,4 @@ else:
     print('nokas')
 
 arreglo2 = [3,3,3]
+newline = 0
