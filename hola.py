@@ -14,3 +14,4 @@ newline2 = 2
 pai = 3
 pri = 2
 rir = 34
+a = 32
