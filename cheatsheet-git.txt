@@ -1,0 +1,141 @@
+PASOS GIT
+1. Esta Git instalado?
+	git --version
+2. Identificarnos con Git
+	git config --list #si al final no aparecen nuestros datos en user.name y user.email hay que setearlos con las sgtes ordenes
+	git config --global user.name "Stiven Muñoz"
+	git config --global user.email "johnstiven40@gmail.com"
+3. Inicializar repo
+	git init
+4. Ignorar files. Crear un file llamado ".gitignore" y adentro poner los files o folders que queremos que se excluyan
+	ej: dentro de .git ignore ponemos: secrets.js
+5. Agregar files to repo
+	git add .
+5.1 Add single file to repo
+	git add README.md
+6. Resetear todos los files a Untracked
+	git reset .
+6.1 Resetear single file to untracked
+	git reset README.md
+7. Commit
+	git commit -m "initial commit"
+	Note: If you are in the branch 'nav' and you execute git commit -m "my commit", the commit will be done in 'nav' branch, not in master
+7.1 add all files modified or created to commit
+	git commit -a -m "text added to README" or git commit -am "text added to README"
+8. Logs
+	git log
+9. Conectar git to github
+	git remote #returns what remote repo is lnked to your local project, if there isn't nothing will be returned
+	git remote add origin https://github.com/john-mz/git-learning
+10. Mostrar link del repo remoto linkeado
+	git remot -v 
+	# output: origin  https://github.com/john-mz/git-learning.git, 
+		  origin  https://github.com/john-mz/git-learning.git (push)
+11. Mostar link del repo remoto linkeado y branches
+	git remote show origin
+	# output: Fetch URL: https://github.com/john-mz/web-theme-bootstrap.git
+  		  Push  URL: https://github.com/john-mz/web-theme-bootstrap.git
+  		  HEAD branch: main
+  		  Remote branch:
+    		   main tracked
+  		  Local branch configured for 'git pull':
+    		   main merges with remote main
+  	          Local ref configured for 'git push':
+    		   main pushes to main (up to date)
+12. Push
+	git push origin master -u #si es la primera vez en pushear toca poner la -u (upstream), luego podemos poner solo git push
+13. Merge remote repo with local repo (SIEMPRE HACER ESTE COMANDO ANTES DE EMPEZAR A PROGRAMAR EN UN PROYECTO PA SIEMPRE ESTAR AL DIA)
+	git pull
+14. Clone repo: Useful cuando tengo acceso de escritura y quiero pushear changes (owned repos)
+	git clone https://github.com/john-mz/git-learning.git
+15. Branch
+15.1 Returns a list of all the branches on the project, current branch will have a "*"
+	git branch
+15.2 Rename branch to main
+	git branch -M main
+15.3 Create branch
+	git branch awesome
+15.4 Delete branch
+15.4.1 Safe way. Only works if changes have already been merged into master or main
+	git branch -d awesome
+15.4.2 Dangerous way. Works whether you merged it or not.
+	git branch -D awesome
+15.5 Switch branch
+	git checkout awesome
+15.6 Publish branch to remote branch and set it up as upstream
+	git push --set-upstream origin awesome
+16. Switch branches
+	git checkout cool
+16.1 Switch to previous branch
+	git checkout - #como cambiar entre ventanas
+16.2 Create branch and switch to the new branch
+	git checkout -b cool
+17. Merge conflicts
+	git diff #muestra diferencias entre branches
+	git merge --abort #aborta la merge operation
+18. Fork: Useful cuando no tengo acceso de escritura y quiero contribuir (open source repos).
+	How to do it: Buscar en el repo en github web una opcion que dice fork y proceder a forkearlo
+19. Pull request
+	Steps:
+	1. Find a github repo u wanna contribute to
+	2. Fork the repo
+	3. Clone the forked repo in your local system (punto 14)
+	4. Create a branch that describes the changes (punto 16.2)
+	5. Implement your changes/feature in the branch
+	6. Commit changes 
+	7. Push branch to your remote repo (git push --set-upstream origin nav, if you already send that order once you can just type git push)
+	8. Head to your forked repo on github, you should see your changes and a button to open a pull request, do not forget to descript your changes.
+20. Reset
+	20.1 Case: You staged a lot of files (add .) and you do not want them staged anymore
+		git reset
+	20.2 Case: You did a bad commit and want to go to your previous commit without affecting your local environment
+		step 1. Get id of the prev commit
+			git log
+		step 2. Reset with the id of the commit
+			git reset 862342abF35 
+	20.3 Case: We want to delete last commit, their staged changes and start at prev commit
+			git reset --hard 862342abF35 
+	Note: No usar si el commit ya fue subido a github, porque el historial de commits local y el del remote repo debe estar en sync
+21. Revert. Que hace? Deshace un commit. Como lo hace? Hace un nuevo commit que nos reversa al que esta antes del bad commit
+	step 1. find it of the bad commit
+		git log
+	step 2: execute the order with the id of the bad commit
+		git revert 862342abF35
+	step 3: type ':q' to leave Vim.
+	now, The new reversed commit will be commited
+	Note: This is the smart way to history-remote repo, i.e, smart way to revert a commit. Use it mostly in open or closed projects. It keeps the history understandable.
+22. Editar commit mas reciente
+	22.1 Editar mensaje
+		git commit --amend -m "better message"
+	22.2 Incluir un file que olvidamos en nuestro ultimo commit (sin editar mensaje)
+		git add <your-file>
+		git commit --amend --no-edit
+23. Stash. Saves your progress locally (does not commit it) and takes u back to the last commit. Note: Make sure you use 'add .' before using "git stash" to save your tracked files progress.
+	23.1 Basic command
+		git stash
+	23.2 Get progress of the last stash
+		git stash pop
+	23.3 Set custom name for stash. instead of "git stash" type
+		git stash save coolstuff
+	23.4 List all stashes
+		git stash List
+	23.5 Apply a stach based on its index
+		git stash apply stash @{1}
+	23.6 Delete specific stash
+		git stash drop stash@{n}
+	23.7 Remove all stashes
+		git stash clear
+24. Rebase. Only use it in private repos, never in open source repos. It sends al the commits of a branch to main/master branch. 
+	Image of reference: https://media.licdn.com/dms/image/v2/D4D12AQHQqYpzC7rHBw/article-cover_image-shrink_720_1280/article-cover_image-shrink_720_1280/0/1690994617726?e=1746057600&v=beta&t=2NXafx1jdWxZfl7DHtQmKq0Igif_jXa3gUlCObZA1T4	
+25. Upstream. Una vez el comando se ejecute 1 vez, de resto solo poner "git push".
+25.1 Setiar como upstream master branch
+	git push origin master -u
+25.2 Setiar como upstream nav branch
+	git push --set-upstream origin nav
+Note: Al ejecutar estos comandos por primera vez, cada branch va a pushear de default a su remote branch correspondiente 
+3. Update my project to the latest changes of the remote repo. i.e, Agregar un file a github desde la web y actualizar los cambios de mi entorno local
+	git pull
+
+Extra
+A. que significa: U = Untracked, A = Added to staging area, M = Modified
+
